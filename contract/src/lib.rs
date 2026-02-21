@@ -83,15 +83,15 @@ impl SoroTaskContract {
             Some(ref resolver_address) => {
                 let mut resolver_call_args = Vec::<Val>::new(&env);
                 resolver_call_args.push_back(config.args.clone().into_val(&env));
-                match env.try_invoke_contract::<bool, soroban_sdk::Error>(
-                    resolver_address,
-                    &Symbol::new(&env, "check_condition"),
-                    resolver_call_args,
-                ) {
-                    Ok(Ok(true)) => true,
-                    _ => false,
-                }
-            }
+                matches!(
+                    env.try_invoke_contract::<bool, soroban_sdk::Error>(
+                        resolver_address,
+                        &Symbol::new(&env, "check_condition"),
+                        resolver_call_args,
+                    ),
+                    Ok(Ok(true))
+                )
+            } // <--- THIS WAS THE MISSING BRACE
             None => true,
         };
 
