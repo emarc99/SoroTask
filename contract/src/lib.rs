@@ -638,4 +638,59 @@ mod tests {
         assert_eq!(client.get_task(&task_id).unwrap().last_run, 150);
     }
 
+    #[test]
+    fn test_gas_management_lifecycle() {
+        let (env, id) = setup();
+        let client = SoroTaskContractClient::new(&env, &id);
+
+        let token_admin = Address::generate(&env);
+        let token_id = env.register_stellar_asset_contract(token_admin.clone());
+        let token_client = soroban_sdk::token::Client::new(&env, &token_id);
+        let token_admin_client = soroban_sdk::token::StellarAssetClient::new(&env, &token_id);
+
+        client.init(&token_id);
+
+        let target = env.register_contract(None, MockTarget);
+        let mut cfg = base_config(&env, target);
+        cfg.gas_balance = 0;
+        let creator = cfg.creator.clone();
+        let task_id = client.register(&cfg);
+
+        // Mint tokens to creator
+        token_admin_client.mint(&creator, &5000);
+        assert_eq!(token_client.balance(&creator), 5000);
+
+        // Deposit gas
+        client.deposit_gas(&task_id, &creator, &2000);
+        assert_eq!(client.get_task(&task_id).unwrap().gas_balance, 2000);
+        assert_eq!(token_client.balance(&creator), 3000);
+        assert_eq!(token_client.balance(&id), 2000);
+
+        // Withdraw gas
+        client.withdraw_gas(&task_id, &500);
+        assert_eq!(client.get_task(&task_id).unwrap().gas_balance, 1500);
+        assert_eq!(token_client.balance(&creator), 3500);
+    }
+
+    #[test]
+    fn test_withdraw_gas_insufficient_balance() {
+        let (env, id) = setup();
+        let client = SoroTaskContractClient::new(&env, &id);
+
+        let token_id = env.register_stellar_asset_contract(Address::generate(&env));
+        client.init(&token_id);
+
+        let target = env.register_contract(None, MockTarget);
+        let mut cfg = base_config(&env, target);
+        cfg.gas_balance = 1000;
+        let task_id = client.register(&cfg);
+
+        let result = client.try_withdraw_gas(&task_id, &1500);
+        assert_eq!(
+            result,
+            Err(Ok(soroban_sdk::Error::from_contract_error(
+                Error::InsufficientBalance as u32
+            )))
+        );
+    }
 }
