@@ -710,6 +710,9 @@ mod tests {
                 Error::InsufficientBalance as u32
             )))
         );
+    }
+
+    #[test]
     fn test_execute_fails_if_keeper_not_whitelisted() {
         let (env, id) = setup();
         let client = SoroTaskContractClient::new(&env, &id);
