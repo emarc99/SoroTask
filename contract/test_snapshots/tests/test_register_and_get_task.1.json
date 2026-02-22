@@ -79,6 +79,14 @@
                       "val": {
                         "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
                       }
+                    },
+                    {
+                      "key": {
+                        "symbol": "whitelist"
+                      },
+                      "val": {
+                        "vec": []
+                      }
                     }
                   ]
                 }
@@ -240,6 +248,14 @@
                       },
                       "val": {
                         "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                      }
+                    },
+                    {
+                      "key": {
+                        "symbol": "whitelist"
+                      },
+                      "val": {
+                        "vec": []
                       }
                     }
                   ]
@@ -456,6 +472,14 @@
                   "val": {
                     "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
                   }
+                },
+                {
+                  "key": {
+                    "symbol": "whitelist"
+                  },
+                  "val": {
+                    "vec": []
+                  }
                 }
               ]
             }
@@ -616,6 +640,14 @@
                   },
                   "val": {
                     "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                  }
+                },
+                {
+                  "key": {
+                    "symbol": "whitelist"
+                  },
+                  "val": {
+                    "vec": []
                   }
                 }
               ]

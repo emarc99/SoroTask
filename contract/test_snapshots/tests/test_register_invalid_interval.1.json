@@ -156,6 +156,14 @@
                   "val": {
                     "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
                   }
+                },
+                {
+                  "key": {
+                    "symbol": "whitelist"
+                  },
+                  "val": {
+                    "vec": []
+                  }
                 }
               ]
             }
@@ -338,6 +346,14 @@
                           },
                           "val": {
                             "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                          }
+                        },
+                        {
+                          "key": {
+                            "symbol": "whitelist"
+                          },
+                          "val": {
+                            "vec": []
                           }
                         }
                       ]
